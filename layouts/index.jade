@@ -1,0 +1,23 @@
+doctype html
+html
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1")
+  
+    title= title
+    link(rel="stylesheet", href="css/main.css")
+body
+    main
+        div.section.section__introduction
+            div.section__background-wrap
+                div.section__background
+                div.section__gradient
+            img.section__logo(src="img/logo-bb.svg")
+        
+          
+script(src="https://code.jquery.com/jquery-latest.js")
+script(src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.js")
+script.
+    $(document).ready(function(){
+        console.log('ok');
+    }).foundation();

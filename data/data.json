@@ -1,0 +1,17 @@
+{
+  "hello": "world",
+  "posts": [
+    {
+      "title": "Wish you were here!",
+      "Author": "Maarten Dings"
+    },
+    {
+      "title": "Voor haar",
+      "Author": "Frans Halsema"
+    },
+    {
+      "title": "Bullet",
+      "Author": "Lenny Kravitz"
+    }
+  ]
+}
