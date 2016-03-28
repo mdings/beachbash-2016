@@ -1,0 +1,24 @@
+{
+  "name": "beachbash-2016",
+  "homepage": "https://github.com/mdings/beachbash-2016",
+  "authors": [
+    "Maarten Dings <maartendings@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fancybox": "^2.1.5",
+    "foundation-sites": "^6.2.0",
+    "normalize-css": "^4.0.0"
+  }
+}
