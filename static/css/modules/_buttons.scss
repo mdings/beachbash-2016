@@ -1,0 +1,28 @@
+%button-base {
+  font-family: 'Hind', sans-serif;
+  display: inline-block;
+  white-space: nowrap;
+  outline: none;
+  background-color: blue;
+  border: none;
+  transition: all 200ms;
+  border-radius: 1px;
+  text-decoration: none;
+}
+
+button,
+.button {
+
+  @extend %button-base;
+}
+
+.button__primary {
+  color: #FF464E;
+  font-size: rem-calc(20);
+  padding: rem-calc(15 70);
+  background: #2D1E2F;
+
+  &:hover {
+    background: #573280;
+  }
+}

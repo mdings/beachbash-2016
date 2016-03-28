@@ -1,23 +1,52 @@
 doctype html
 html
 head
-    meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width,initial-scale=1")
+  meta(charset="UTF-8")
+  meta(name="viewport", content="width=device-width,initial-scale=1")
   
-    title= title
-    link(rel="stylesheet", href="css/main.css")
+  title= title
+  link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+  link(rel="stylesheet" href="css/main.css")
 body
-    main
-        div.section.section__introduction
-            div.section__background-wrap
-                div.section__background
-                div.section__gradient
-            img.section__logo(src="img/logo-bb.svg")
+  main
+    div.panel.panel-tout
+      div.wrap
+        span.date Zaterdag 16 juli
+        span.location Thorn, Maasplassen
+        img(src="/img/logo-bb.svg")
+        a.button.button__primary(href="https://www.tixxx.nl/nl/ticketshop/tickets/132" title="Koop tickets") Koop tickets
+        
+      
+    div.panel.panel-intro
+      a.panel__video(href="https://www.youtube.com/watch?v=hsKgcl7jiHE")
+        //- div.flex-video
+          //- iframe(width="420" height="315" src="https://player.vimeo.com/video/139438475" frameborder="0")
+      div.indent
+        div.panel__content
+          section.about
+            h1 Once Upon a Beach
+            p.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            p.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            p.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         
           
-script(src="https://code.jquery.com/jquery-latest.js")
-script(src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.js")
-script.
-    $(document).ready(function(){
-        console.log('ok');
-    }).foundation();
+          
+    div.panel.panel-movie
+      div.bg
+      div.overlay
+        span.payoff
+          span.payoff__line Your life is your story.
+          span.payoff__line Write well. Edit often.
+    
+    div.panel.panel-info
+      div.panel__content
+        section.more-info
+          div.row
+            div.small-12.columns
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          
+script(src="http://code.jquery.com/jquery-latest.js")        
+script(src="js/main.js")

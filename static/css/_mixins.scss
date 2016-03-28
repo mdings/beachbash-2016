@@ -1,0 +1,15 @@
+@mixin baseline-guide {
+  position: relative;
+
+  &:after {
+    background-image: linear-gradient($guide-color-1 1px, transparent 1px, transparent $rhythm-unit*1px, $guide-color-2 $rhythm-unit*1px, transparent $rhythm-unit*1px+1px);
+    background-size: 100% rem-calc($base-line-height);
+    width: 100%;
+    height: auto;
+    content: '';
+    display: block;
+    position: absolute;
+    top:0;
+    bottom: 0;
+  }
+}
