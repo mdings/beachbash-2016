@@ -1510,7 +1510,7 @@ body {
     right: 0;
     bottom: -0.9375rem;
     height: 3.75rem;
-    background: url(/img/scallop.svg);
+    background: url(img/scallop.svg);
     background-repeat: repeat-x;
     background-position: 50% 0;
     -webkit-transform: rotate(180deg);
