@@ -5,6 +5,7 @@ var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var fontMagician = require('postcss-font-magician');
 var concat = require('gulp-concat');
+var ghPages = require('gulp-gh-pages');
 
 // Static Server + watching scss/html files
 gulp.task('serve', function() {
@@ -51,6 +52,11 @@ gulp.task('build', function(){
   ms('build').build(function(){
     browserSync.reload({stream:false});
   });
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('build/**/*')
+    .pipe(ghPages());
 });
 
 gulp.task('default', ['serve']);
