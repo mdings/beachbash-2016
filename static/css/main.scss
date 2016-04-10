@@ -1,321 +1,54 @@
-
-@import "settings";
-
-
-$base-font-size: 16;
-$base-line-height: 28;
-$rhythm-unit: $base-line-height/2;
-
-$guide-color-1: #FFCADF;
-$guide-color-2: #E2D1FB;
-/* Coolors Exported Palette - coolors.co/540d6e-eee82c-ee4266-f3fcf0-1f271b */
-
-$color1: #540d6e; //rgba(84, 13, 110, 100)
-$color2: #eee82c; //rgba(238, 232, 44, 100)
-$color3: #ee4266; //rgba(238, 66, 102, 100)
-$color4: #f3fcf0; //rgba(243, 252, 240, 100)
-$color5: #1f271b; //rgba(31, 39, 27, 100)
-
-@import "foundation";
-@import "vendor/fancybox";
-@import "modules/buttons";
-@import "modules/typography";
-@import "mixins";
-@import 'util/mixins';
-
-@include foundation-grid;
-@include foundation-flex-video;
-
-
 *,
 *:before,
 *:after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
 }
-
-html {
-  // @include baseline-guide;
-}
-
-nav {
-  position: fixed;
-  background-color: #161616;
-  width: 100%;
-  top: 0;
-  z-index: 9;
-  text-align: center;
-
-  li {
-    display: inline-block;
-  }
-
-  a {
-    font-size: 19px;
-    text-decoration: none;
-    font-family: Arimo;
-    text-transform: uppercase;
-    padding: 14px 11px;
-    display: inline-block;
-    color: #fff;
-  }
-}
-
 
 .panel {
-  position: relative;
-  text-align: center;
-
-  &:not(.panel--fixed) {
-    padding: 90px 0;
-  }
-
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 
-.is-offscreen {
-  left: -10000px;
-}
-
-.panel--fixed {
+.one {
+  width: 60%;
   height: 100vh;
-  position: fixed;
-  top: 50px;
-
+  background-color: red;
+  z-index: 10;
 }
 
-.panel-tout {
-  z-index: -1;
-  width: 100%;
-  background-image: url(/img/bg-intro.jpg);
-  background-position: center top;
-  background-size: cover;
-  // border-left: 15px solid $color3;
-  // border-right: 15px solid $color3;
-
-  > div {
-    @include absolute-center;
-    margin-top: -25px;
-
-    .logo {
-      display: block;
-      clear: both;
-      max-width: rem-calc(450);
-      margin: 40px 0;
-    }
-  }
-
-  .date,
-  .location {
-    line-height: 1.2;
-    font-family: Vollkorn;
-    font-size: 40px;
-  }
-
-  .location {
-    font-style: italic;
-    font-size: 24px;
-    text-decoration: underline;
-  }
-
-  a {
-    clear: both;
-  }
-}
-
-.panel-intro {
-  background-color: $color1;
-  color: #fff;
-  border: 70px solid transparent;
-  border-image: url(/img/flowers.jpg) 70 round;
-  border-bottom-width: 0;
-  border-left-width: 0;
-  border-right-width: 0;
-  min-height: 100vh;
-  margin-top: 100vh;
-  margin-bottom: 100vh;
-
-  @include pseudo-element('after') {
-    height: 40px;
-    background: svg('swirl', '[fill]:#{$color1}');
-    background-size: 30%;
-    bottom: -10px;
-    top: auto;
-  }
-}
-
-.aftermovie {
-  display: block;
-  margin: 0 auto;
-  margin-top: $rhythm-unit*10+px;
+.two {
   width: 70%;
-  position: relative;
+  height: 100vh;
+  background-color: blue;
+  z-index: 9;
 }
 
-.aftermovie__bg {
-  display: block;
-  background: url(/img/aftermovie.jpg);
-  background-size: cover;
-  background-position: center center;
-  height: 0;
-  padding-bottom: 60%;
-
-  @include pseudo-element {
-    background: transparent;
-    border-right: 12px solid $color2;
-    border-bottom: 12px solid $color2;
-    transform: translate(12px, 12px);
-  }
+.three {
+  width: 80%;
+  height: 100vh;
+  background-color: yellow;
+  z-index: 8;
 }
 
-.aftermovie__button {
-  @include absolute-center;
-  width: 80px;
-  height: 80px;
-  background: red;
+.four {
+  width: 90%;
+  height: 2000px;
+  background-color: orange;
+  z-index: 7;
 }
 
-.aftermovie__button--play {
-
-}
-
-.panel__bg,
-.panel__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.panel--bg {
+.five {
   width: 100%;
-  height: calc(100vh - 50px); // calc the nav height too
-  z-index: -1;
-
-  .panel__bg {
-    background-size: cover;
-    background-position: center center;
-    @include gray-filter;
-  }
+  height: 100vh;
+  background: url(../img/bg-intro.jpg);
+  z-index: 6;
+  border: 10px solid blue;
 }
 
-.panel-payoff {
-  $borderWidth: 25px;
-  border: $borderWidth solid $color2;
-  border-image: url(../img/matrix.jpg) strip-unit($borderWidth) round;
-  background-color: mix(#000, #222659, 20%);
-  z-index: -2;
-
-  .panel__bg {
-    background-image: url(../img/lalabg-1.jpg);
-    background-size: cover;
-    background-position: top center;
-    opacity: .09;
-    // transition: opacity 1s;
-  }
-
-  &.is-inverse {
-    // border-image: none;
-    // border-image: url(../img/matrix.jpg) strip-unit($borderWidth) round;
-
-    .panel__bg {
-      opacity: 0.01;
-    }
-
-
-    .panel__tags {
-      // color: #fff;
-
-      > div {
-        // border-bottom-color: $color2;
-      }
-    }
-  }
+.scroller {
+  position: absolute;
+  left: 10px;
+  width: 1px;
+  height: 6000px;
 }
-
-.panel__tags {
-  @include absolute-center;
-  z-index: 1;
-  color: $color4;
-  font-size: 30px;
-  font-family: Lato;
-  font-size: 60px;
-  margin-top: -25px;
-
-  > div {
-    white-space: nowrap;
-    display: block;
-    clear: both;
-    border-bottom: 5px solid $color3;
-  }
-}
-
-.panel-qa {
-  background: $color2;
-  background-image: url(../img/icy-small.png);
-  background-position: center center;
-  background-repeat: repeat-x;
-  background-attachment: fixed;
-  background-size: 600px;
-  // border: 15px solid mix(#000, $color2, 40%);
-}
-
-.panel-line-up {
-    display: none;
-
-    .artist {
-      display: block;
-      max-width: 100%;
-      margin-bottom: 30px;
-    }
-}
-
-.panel-contact {
-  background: $color4;
-  min-height: 600px;
-  background-image: url(../img/icy-small.png);
-  background-position: center center;
-  background-repeat: repeat-x;
-  background-attachment: fixed;
-  background-size: 600px;
-
-  // .panel__bg {
-  //   background-image:url(../img/horses-friends.gif);
-  //   background-size: cover;
-  //   background-position: center center;
-  //   @include gray-filter();
-  //
-  // }
-  //
-  // .panel__overlay {
-  //   background: $color4;
-  //   opacity: .8;
-  // }
-
-}
-
-.panel__content {
-  position: relative;
-}
-
-
-// /**
-//  * Text masking — The SVG way
-//  */
-//
-// svg {
-// 	width: 100%;
-//   height: 100vh;
-// 	font: 900 500%/1.2 'Arial Black', sans-serif;
-//
-//   #wood {
-//     fill: red;
-//     position: fixed;
-//     width: 100%;
-//     height: 100%;
-//   }
-// }
-//
-// text { fill: url(#wood); }
