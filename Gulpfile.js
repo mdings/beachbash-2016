@@ -5,7 +5,6 @@ var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var fontMagician = require('postcss-font-magician');
 var pxtorem = require('postcss-pxtorem');
-var normalize = require('postcss-normalize');
 var postcssSVG = require('postcss-svg');
 var concat = require('gulp-concat');
 var ghPages = require('gulp-gh-pages');
@@ -46,7 +45,6 @@ gulp.task('sass', function() {
       paths: ['./build/img/swirl.svg'],
       defaults: "[fill]: none",
     }),
-    normalize()
   ];
   return gulp.src('static/css/*.scss')
   .pipe(sourcemaps.init())

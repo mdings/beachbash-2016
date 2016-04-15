@@ -45,4 +45,8 @@ $(document).ready(function() {
     // }
 
   }).trigger('scroll');
+
+  setInterval(function(){
+    $('.panel-three').toggleClass('is-inverse');
+  }, 50);
 });
