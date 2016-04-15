@@ -1,0 +1,177 @@
+.panel {
+  position: relative;
+  text-align: center;
+  border-style: solid;
+  box-shadow: -3px 3px 10px 1px rgba(0,0,0,.2);
+  padding: 20px 10px 30px;
+
+  @include breakpoint(small) {
+    border-width: map-get($borderWidth, small);
+  }
+
+  @include breakpoint(medium up) {
+    border-width: map-get($borderWidth, medium);
+    padding: 60px 140px 70px;
+  }
+
+
+  @include breakpoint(large up) {
+    border-width: map-get($borderWidth, large);
+    .no-touch & {
+      position: fixed;
+      top: 0;
+      right: 0;
+
+      /*
+      Set the z-index of the panels */
+      @for $i from 1 through 6 {
+        &:nth-child(#{$i}) {
+          z-index: 20 - $i;
+          width: calc(50% + (#{$panelSpacing} * #{$i}));
+        }
+      }
+    }
+  }
+
+}
+
+.panel-tout {
+  color: #fff;
+  font-family: Vollkorn;
+  background-color: $color0;
+  background-image: url(../img/fishy.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-color: #ffb297;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-size: 50%;
+  font-size: 40px;
+  line-height: 1;
+
+  @include breakpoint(large up) {
+    .no-touch & {
+      max-width: 40%;
+    }
+  }
+
+  .logo {
+    margin: 90px auto;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .location {
+    font-style: italic;
+    text-decoration: underline;
+  }
+}
+
+.panel-intro {
+  background-color: $color1;
+  width: auto;
+  color: #fff;
+  border-color: #d54f9d;
+  border-image: url(../img/matrix.jpg);
+  @include breakpoint(small) {
+    border-image-slice: strip-unit(map-get($borderWidth, small));
+  }
+
+  @include breakpoint(medium) {
+    border-image-slice: strip-unit(map-get($borderWidth, medium));
+  }
+
+  @include breakpoint(large up) {
+    border-image-slice: strip-unit(map-get($borderWidth, large));
+  }
+}
+
+.panel-bumper {
+  display: none;
+
+  @include breakpoint(large up) {
+    display: block;
+    border-color: #9f2de1;
+    background-color: #477998;
+    // border-image: url(../img/matrix.jpg);
+    background-position: center center;
+    min-height: calc(100vh);
+  }
+
+  &.is-inverse {
+    .panel__bg {
+      opacity: 0.25;
+    }
+  }
+}
+
+.panel-qa {
+  z-index: 7;
+  background: $color2;
+  border-color: mix(#000, $color2, 40%);
+  background-image: url(../img/icy-small.png);
+  background-position: center center;
+  background-repeat: repeat-x;
+  background-size: 600px;
+
+  @include breakpoint(large down) {
+    margin-bottom: 100vh;
+  }
+}
+
+.panel-outro {
+  width: 100vw!important;
+  height: 100vh;
+  background-image: url(../img/flowers.jpg);
+  border-color: mix(#fff, #200c3f, 5%);
+
+  @include breakpoint(large down) {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+  }
+}
+
+.panel-contact {
+  border-color: $color5;
+  background: $color5;
+  color: #fff;
+
+  .no-touch & {
+    bottom: 0;
+    top: auto;
+    width: 100vw!important;
+  }
+}
+
+
+/*
+Elements */
+.panel__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .09;
+  background-image: url(../img/horsy-dance.gif);
+  background-size: cover;
+  background-position: center center;
+  @include gray-filter;
+}
+
+.panel__tags {
+  @include absolute-center;
+
+  > span {
+    font-family: Vollkor;
+    color: #000;
+    padding: 0 20px;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    font-size: 55px;
+    display: inline-block;
+    font-style: italic;
+    background: #00e5be;
+  }
+}

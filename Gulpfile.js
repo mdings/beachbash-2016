@@ -42,7 +42,7 @@ gulp.task('sass', function() {
     fontMagician({hosted: './static/fonts/'}),
     pxtorem({propWhiteList: []}),
     postcssSVG({
-      paths: ['./build/img/swirl.svg'],
+      paths: ['./build/img/play.svg'],
       defaults: "[fill]: none",
     }),
   ];

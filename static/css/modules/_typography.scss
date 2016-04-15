@@ -1,29 +1,35 @@
 h1 {
   font-family: Lato;
-  margin: 0 0 $rhythm-unit*3+px 0;
+  margin: 0 0 0;
   padding: 0;
   text-transform: uppercase;
-  font-size: 70px;
+  font-size: 60px;
+
 }
 
 h2 {
   font-family: Lato;
-  margin: $rhythm-unit*3+px 0 0 0;
+  margin: 0 0 0;
   padding: 0;
   text-transform: uppercase;
-  font-size: 70px;
+  font-size: 60px;
 }
 
 h3 {
   font-family: Lato;
-  margin: $rhythm-unit*3+px 0 0 0;
+  margin: 25px 0 0;
   padding: 0;
   font-size: 30px;
 }
 
 h4 {
   font-size: 18px;
-  margin: $rhythm-unit*2+px 0 0 0;
+  margin: 25px 0 0;
+  padding: 0;
+
+  & + p {
+    margin-top: 0;
+  }
 
 }
 
@@ -31,7 +37,6 @@ p {
   font-family: Arimo;
   font-weight: 400;
   font-size: 18px;
-  margin: 0;
+  margin: 20px 0 0;
   padding: 0;
-  line-height: $base-line-height+px;
 }

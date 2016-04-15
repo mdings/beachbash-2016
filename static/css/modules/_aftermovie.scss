@@ -1,0 +1,45 @@
+.aftermovie {
+  display: block;
+  margin: 60px auto 20px;
+  position: relative;
+  width: 60%;
+}
+
+.aftermovie__bg {
+  display: block;
+  background: url(/img/aftermovie.jpg);
+  background-size: cover;
+  background-position: center center;
+  height: 0;
+  padding-bottom: 60%;
+
+  @include pseudo-element {
+    background: transparent;
+    border-right: 12px solid $color4;
+    border-bottom: 12px solid $color4;
+    transform: translate(12px, 12px);
+  }
+}
+
+.aftermovie__button {
+  @include absolute-center;
+  width: 80px;
+  height: 80px;
+  background-color: $color3;
+  transition: 250ms all;
+
+  &:hover {
+    background-color: $color4;
+  }
+}
+
+.aftermovie__button--play {
+  background-size: 40px;
+  background-position: calc(50% + 4px) center;
+  background-image: svg('play', '[fill]:#{$color4}');
+  background-repeat: no-repeat;
+
+  &:hover {
+    background-image: svg('play', '[fill]:#{$color3}');
+  }
+}

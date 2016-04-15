@@ -1,0 +1,36 @@
+nav {
+  position: fixed;
+  background-color: #161616;
+  top: 40px;
+  left: 40px;
+  z-index: 99;
+  text-align: center;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    // clear: both;
+  }
+
+  a {
+    padding: 9px 10px;
+    font-size: 19px;
+    text-decoration: none;
+    font-family: Arimo;
+    text-transform: uppercase;
+    display: inline-block;
+    color: #fff;
+
+    &.active {
+      @include pseudo-element('after') {
+        border-bottom: 3px solid #22c16d;
+        bottom: -3px;
+      }
+
+    }
+  }
+}

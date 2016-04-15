@@ -1,12 +1,5 @@
-@import "settings";
-@import "foundation";
-@import "mixins";
-
-@include foundation-global-styles;
-@include foundation-grid;
-@include foundation-flex-video;
-
-
+/*
+Color pallette */
 $color0: #ff464e;
 $color1: #540d6e;
 $color2: #eee82c;
@@ -14,166 +7,74 @@ $color3: #ee4266;
 $color4: #f3fcf0;
 $color5: #1f271b;
 
-nav {
+/*
+Settings */
+$borderWidth: (
+  small: 10px,
+  medium: 15px,
+  large: 20px
+);
+$panelSpacing: 100px;
+
+/*
+Foundation */
+@import
+"settings",
+"foundation";
+
+
+@include foundation-global-styles;
+@include foundation-grid;
+@include foundation-flex-video;
+
+/*
+Custom */
+@import
+"mixins",
+"modules/aftermovie",
+"modules/buttons",
+"modules/navigation",
+"modules/panels",
+"modules/typography";
+
+/*
+Vendor */
+@import
+"vendor/fancybox";
+
+html {
+  font-size: 14px;
+
+  @include breakpoint(medium up) {
+    font-size: 15px;
+  }
+
+  @include breakpoint(large up) {
+    font-size: 16px;
+  }
+}
+
+body {
+  background-color: #000;
+}
+
+.credentials {
   position: fixed;
-  background-color: #161616;
-
-  top: 40px;
-  left: 40px;
-  z-index: 99;
-  text-align: center;
-
-  ul {
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    // clear: both;
-  }
+  bottom: 10px;
+  left: 10px;
+  z-index: 999;
+  color: #fff;
+  font-size: 15px;
 
   a {
-    padding: 9px 10px;
-    font-size: 19px;
-    text-decoration: none;
-    font-family: Arimo;
-    text-transform: uppercase;
-    display: inline-block;
     color: #fff;
   }
 }
 
-.panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 30px 140px;
-    text-align: center;
-}
-
-.panel-one {
-  background-color: $color0;
-  z-index: 10;
-  background-image: url(../img/fishy.jpg);
-  background-position: center center;
-  background-repeat: no-repeat;
-  border: 20px solid #ffb297;
-  width: 50%;
-  height: 700px;
-
-  img.logo {
-    max-width: 400px;
-  }
-}
-
-.panel-two {
-  background-color: $color1;
-  width: auto;
-  width: 75%;
-  z-index: 9;
-  color: #fff;
-  border: 20px solid lighten($color1, 10%);
-  // border-image: url(/img/flowers.jpg) 20 round;
-  min-height: calc(100vh);
-}
-
-.aftermovie {
-  display: block;
-  margin: 60px auto 20px;
-  position: relative;
-  width: 60%;
-}
-
-.aftermovie__bg {
-  display: block;
-  background: url(/img/aftermovie.jpg);
-  background-size: cover;
-  background-position: center center;
-  height: 0;
-  padding-bottom: 60%;
-
-  @include pseudo-element {
-    background: transparent;
-    border-right: 12px solid $color2;
-    border-bottom: 12px solid $color2;
-    transform: translate(12px, 12px);
-  }
-}
-
-.aftermovie__button {
-  @include absolute-center;
-  width: 80px;
-  height: 80px;
-  background: red;
-}
-
-.aftermovie__button--play {
-
-}
-
-.panel-three {
-  z-index: 8;
-  border: 20px solid mix(#000, $color1, 20%);
-  // border-image: url(../img/matrix.jpg) 25 round;
-  width: 80%;
-  background-color: mix(#000, #222659, 20%);
-  min-height: calc(100vh);
-
-  &.is-inverse {
-    .panel__bg {
-      opacity: 0.01;
-    }
-  }
-}
-
-.panel__bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: .09;
-  background-image: url(../img/horsy-haha.gif);
-  background-size: cover;
-  background-position: center center;
-  @include gray-filter;
-}
-
-.panel__tags {
-  @include absolute-center;
-  z-index: 1;
-  color: $color4;
-  font-size: 30px;
-  font-family: Lato;
-  font-size: 60px;
-
-  > div {
-    white-space: nowrap;
-    display: block;
-    clear: both;
-    border-bottom: 5px solid $color3;
-  }
-}
-
-.panel-four {
-  width: 85%;
-  z-index: 7;
-  background: $color2;
-  border: 20px solid mix(#000, $color2, 40%);
-  // border-image: url(../img/matrix.jpg) 25 round;
-}
-
-.panel-five {
-  width: 100%;
-  height: 100vh;
-  background-image: url(../img/flowers.jpg);
-  z-index: 6;
-  // border: 15px solid darken(#222659, 5%);
-}
-
+/*
+Calculates the total scrolling distance */
 .scroller {
   position: absolute;
-  left: 10px;
+  left: 1px;
   width: 1px;
-  height: 6000px;
 }

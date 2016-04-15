@@ -1,5 +1,5 @@
 doctype html
-html
+html.no-touch
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width,initial-scale=1")
@@ -9,82 +9,20 @@ html
     
     
   body
-    nav 
-      ul
-        li
-          a(href="#") Introduction
-          a(href="#") Q&A
-          a(href="#") Contact
-          a(href="#") Tickets
-        
     .scroller
+    include partials/nav.jade
+    div.wrapper
+      include partials/tout.jade
+      include partials/bumper.jade
+      include partials/intro.jade
+      include partials/qa.jade
+      include partials/outro.jade
+      include partials/contact.jade
       
-    .panel.panel-one
-      div.row
-        div.columns
-          div.date Zaterdag 16 juli
-          div.location Maasplassen Thorn
-          img.logo(src="/img/logo-bb.svg")
-          a.button.button--primary(href="#linktotickes") Koop tickets
-          
-          
-    
-              
-    .panel.panel-two
-      div.row
-        div.columns
-          h1 Introduction
-          p.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          
-          a.aftermovie(href="https://www.youtube.com/watch?v=hsKgcl7jiHE")
-            span.aftermovie__bg
-            span.aftermovie__button.aftermovie__button--play
-    
-    
-    .panel.panel-three
-      div.panel__bg
-      div.panel__overlay
-      div.panel__tags
-        div Your Life Is Your Story
-        div Write Well, Edit Often
-    
-    .panel.panel-four
-      div.row
-        div.columns
-          h2 Q&A
-      div.row
-        div.small-12.medium-6.columns
-          h3 Algemene info
-          
-          h4 Waar vindt OUAB plaats?
-          p Maasplassen in Thorn. Hier op Google Maps. Adres voor navigatie is waterstraat 12, Thorn
-          
-          h3 Bereikbaarheid 
-          
-          h4 Auto vanuit het noorden
-          p Even een korte routebeschrijving maken
-          h4 Auto vanuit het zuiden
-          p Even een korte routebeschrijving maken
-          h4 Openbaar vervoer
-          p Routeplanner invoegen
-          
-        div.small-12.medium-6.columns
-          h3 Tickets
-          
-          h4 Wat kost een ticket?
-          p Tickets in de voorverkoop kosten zoveel en dan later zoveel
-          
-          h3 Faciliteiten
-          h4 Lockers
-          p Er zijn standaard lockers op het terrein aanwezig
-          h4 Fouilleren en zero-tolerance
-          P Fouilleren en anders niet binnen hoor
-          h4 Eten en drinken
-          p Foodtrucks, diverse dranken etc.
-    
-    .panel.panel-five
-      
+    span.credentials. 
+      Site by Maarten Dings 
+      <br> 
+      <a href="https://github.com/mdings/beachbash-2016">Source on Github</a>
       
   script(src="http://code.jquery.com/jquery-latest.js")        
   script(src="js/main.js")

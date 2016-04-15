@@ -1,11 +1,11 @@
 %button-base {
-  font-family: Lato, sans-serif;
+  font-family: Arimo, sans-serif;
   display: inline-block;
   white-space: nowrap;
   outline: none;
-  background-color: blue;
   border: none;
   transition: all 200ms;
+  line-height: 1;
   border-radius: 1px;
   text-decoration: none;
 }
@@ -20,9 +20,9 @@ button,
   color: #fff;
   font-size: 20px;
   padding: 15px 70px;
-  background: $color1;
+  background: mix(#000, $color0, 80%);
 
   &:hover {
-    background: $color3;
+    background: mix(#000, $color0, 70%);
   }
 }
