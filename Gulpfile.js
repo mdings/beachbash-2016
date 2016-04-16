@@ -27,7 +27,7 @@ gulp.task('scripts', function() {
   return gulp.src([
     'bower_components/fancybox/source/jquery.fancybox.js',
     'bower_components/fancybox/source/helpers/jquery.fancybox-media.js',
-    'static/js/vendor/jquery.visible.js',
+    'static/js/vendor/impetus.js',
     'static/js/main.js'
   ])
   .pipe(concat('main.js'))
@@ -42,7 +42,7 @@ gulp.task('sass', function() {
     fontMagician({hosted: './static/fonts/'}),
     pxtorem({propWhiteList: []}),
     postcssSVG({
-      paths: ['./build/img/play.svg'],
+      paths: ['./build/img/play.svg', './build/img/home.svg'],
       defaults: "[fill]: none",
     }),
   ];

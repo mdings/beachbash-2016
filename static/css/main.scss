@@ -22,10 +22,14 @@ Foundation */
 "settings",
 "foundation";
 
-
 @include foundation-global-styles;
 @include foundation-grid;
 @include foundation-flex-video;
+
+/*
+Vendors */
+@import
+"vendor/fancybox";
 
 /*
 Custom */
@@ -37,16 +41,13 @@ Custom */
 "modules/panels",
 "modules/typography";
 
-/*
-Vendor */
-@import
-"vendor/fancybox";
 
 html {
-  font-size: 14px;
+  font-size: 12px;
+  overflow: visible;
 
   @include breakpoint(medium up) {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   @include breakpoint(large up) {
@@ -55,13 +56,39 @@ html {
 }
 
 body {
-  background-color: #000;
+  overflow: visible;
+  background: $color5;
+
+  &:before {
+    content: '';
+    position: fixed;
+    color: red;
+    z-index: 99999999;
+
+    @include breakpoint(small only) {
+      content: 'small only'
+    }
+
+    @include breakpoint(small up) {
+      content: 'small up'
+    }
+
+    @include breakpoint(medium up) {
+      content: 'medium up'
+    }
+
+    @include breakpoint(large up) {
+      content: 'large up'
+    }
+  }
+
 }
+
 
 .credentials {
   position: fixed;
-  bottom: 10px;
-  left: 10px;
+  bottom: 30px;
+  left: 30px;
   z-index: 999;
   color: #fff;
   font-size: 15px;
@@ -73,8 +100,8 @@ body {
 
 /*
 Calculates the total scrolling distance */
-.scroller {
-  position: absolute;
-  left: 1px;
-  width: 1px;
-}
+// .scroller {
+//   position: absolute;
+//   left: 1px;
+//   width: 1px;
+// }

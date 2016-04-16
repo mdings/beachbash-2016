@@ -1,10 +1,16 @@
-nav {
+.nav-desktop {
+  @include show-for(medium);
+  display: none;
   position: fixed;
   background-color: #161616;
   top: 40px;
   left: 40px;
   z-index: 99;
   text-align: center;
+
+  @include breakpoint(large up) {
+    display: block;
+  }
 
   ul {
     margin: 0;
@@ -32,5 +38,20 @@ nav {
       }
 
     }
+  }
+}
+
+.nav-mobile {
+  display: none; // disabled for now
+  background: #000;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  padding: 15px 17px 17px 15px;
+
+  span {
+    display: block;
+    @include hamburger(#fff, $color4, 30px, 23px, 2px);
   }
 }
