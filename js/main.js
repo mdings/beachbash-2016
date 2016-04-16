@@ -2217,8 +2217,648 @@
 	};
 
 }(jQuery));
-$(document).ready(function(){
-  $('.panel__video').fancybox({
+(function (global, factory) {
+	if (typeof define === 'function' && define.amd) {
+		define(['exports', 'module'], factory);
+	} else if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
+		factory(exports, module);
+	} else {
+		var mod = {
+			exports: {}
+		};
+		factory(mod.exports, mod);
+		global.Impetus = mod.exports;
+	}
+})(this, function (exports, module) {
+	'use strict';
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var stopThresholdDefault = 0.3;
+	var bounceDeceleration = 0.04;
+	var bounceAcceleration = 0.11;
+
+	var Impetus = function Impetus(_ref) {
+		var _ref$source = _ref.source;
+		var sourceEl = _ref$source === undefined ? document : _ref$source;
+		var updateCallback = _ref.update;
+		var _ref$multiplier = _ref.multiplier;
+		var multiplier = _ref$multiplier === undefined ? 1 : _ref$multiplier;
+		var _ref$friction = _ref.friction;
+		var friction = _ref$friction === undefined ? 0.92 : _ref$friction;
+		var initialValues = _ref.initialValues;
+		var boundX = _ref.boundX;
+		var boundY = _ref.boundY;
+		var _ref$bounce = _ref.bounce;
+		var bounce = _ref$bounce === undefined ? true : _ref$bounce;
+
+		_classCallCheck(this, Impetus);
+
+		var boundXmin, boundXmax, boundYmin, boundYmax, pointerLastX, pointerLastY, pointerCurrentX, pointerCurrentY, pointerId, decVelX, decVelY;
+		var targetX = 0;
+		var targetY = 0;
+		var stopThreshold = stopThresholdDefault * multiplier;
+		var ticking = false;
+		var pointerActive = false;
+		var paused = false;
+		var decelerating = false;
+		var trackingPoints = [];
+
+		/**
+   * Initialize instance
+   */
+		(function init() {
+			sourceEl = typeof sourceEl === 'string' ? document.querySelector(sourceEl) : sourceEl;
+			if (!sourceEl) {
+				throw new Error('IMPETUS: source not found.');
+			}
+
+			if (!updateCallback) {
+				throw new Error('IMPETUS: update function not defined.');
+			}
+
+			if (initialValues) {
+				if (initialValues[0]) {
+					targetX = initialValues[0];
+				}
+				if (initialValues[1]) {
+					targetY = initialValues[1];
+				}
+				callUpdateCallback();
+			}
+
+			// Initialize bound values
+			if (boundX) {
+				boundXmin = boundX[0];
+				boundXmax = boundX[1];
+			}
+			if (boundY) {
+				boundYmin = boundY[0];
+				boundYmax = boundY[1];
+			}
+
+			sourceEl.addEventListener('touchstart', onDown);
+			sourceEl.addEventListener('mousedown', onDown);
+		})();
+
+		/**
+   * Disable movement processing
+   * @public
+   */
+		this.pause = function () {
+			pointerActive = false;
+			paused = true;
+		};
+
+		/**
+   * Enable movement processing
+   * @public
+   */
+		this.resume = function () {
+			paused = false;
+		};
+
+		/**
+   * Update the current x and y values
+   * @public
+   * @param {Number} x
+   * @param {Number} y
+   */
+		this.setValues = function (x, y) {
+			if (typeof x === 'number') {
+				targetX = x;
+			}
+			if (typeof y === 'number') {
+				targetY = y;
+			}
+		};
+
+		/**
+   * Update the multiplier value
+   * @public
+   * @param {Number} val
+   */
+		this.setMultiplier = function (val) {
+			multiplier = val;
+			stopThreshold = stopThresholdDefault * multiplier;
+		};
+
+		/**
+   * Executes the update function
+   */
+		function callUpdateCallback() {
+			updateCallback.call(sourceEl, targetX, targetY);
+		}
+
+		/**
+   * Creates a custom normalized event object from touch and mouse events
+   * @param  {Event} ev
+   * @returns {Object} with x, y, and id properties
+   */
+		function normalizeEvent(ev) {
+			if (ev.type === 'touchmove' || ev.type === 'touchstart' || ev.type === 'touchend') {
+				var touch = ev.targetTouches[0] || ev.changedTouches[0];
+				return {
+					x: touch.clientX,
+					y: touch.clientY,
+					id: touch.identifier
+				};
+			} else {
+				// mouse events
+				return {
+					x: ev.clientX,
+					y: ev.clientY,
+					id: null
+				};
+			}
+		}
+
+		/**
+   * Initializes movement tracking
+   * @param  {Object} ev Normalized event
+   */
+		function onDown(ev) {
+			var event = normalizeEvent(ev);
+			if (!pointerActive && !paused) {
+				pointerActive = true;
+				decelerating = false;
+				pointerId = event.id;
+
+				pointerLastX = pointerCurrentX = event.x;
+				pointerLastY = pointerCurrentY = event.y;
+				trackingPoints = [];
+				addTrackingPoint(pointerLastX, pointerLastY);
+
+				document.addEventListener('touchmove', onMove);
+				document.addEventListener('touchend', onUp);
+				document.addEventListener('touchcancel', stopTracking);
+				document.addEventListener('mousemove', onMove);
+				document.addEventListener('mouseup', onUp);
+			}
+		}
+
+		/**
+   * Handles move events
+   * @param  {Object} ev Normalized event
+   */
+		function onMove(ev) {
+			ev.preventDefault();
+			var event = normalizeEvent(ev);
+
+			if (pointerActive && event.id === pointerId) {
+				pointerCurrentX = event.x;
+				pointerCurrentY = event.y;
+				addTrackingPoint(pointerLastX, pointerLastY);
+				requestTick();
+			}
+		}
+
+		/**
+   * Handles up/end events
+   * @param {Object} ev Normalized event
+   */
+		function onUp(ev) {
+			var event = normalizeEvent(ev);
+
+			if (pointerActive && event.id === pointerId) {
+				stopTracking();
+			}
+		}
+
+		/**
+   * Stops movement tracking, starts animation
+   */
+		function stopTracking() {
+			pointerActive = false;
+			addTrackingPoint(pointerLastX, pointerLastY);
+			startDecelAnim();
+
+			document.removeEventListener('touchmove', onMove);
+			document.removeEventListener('touchend', onUp);
+			document.removeEventListener('touchcancel', stopTracking);
+			document.removeEventListener('mouseup', onUp);
+			document.removeEventListener('mousemove', onMove);
+		}
+
+		/**
+   * Records movement for the last 100ms
+   * @param {number} x
+   * @param {number} y [description]
+   */
+		function addTrackingPoint(x, y) {
+			var time = Date.now();
+			while (trackingPoints.length > 0) {
+				if (time - trackingPoints[0].time <= 100) {
+					break;
+				}
+				trackingPoints.shift();
+			}
+
+			trackingPoints.push({ x: x, y: y, time: time });
+		}
+
+		/**
+   * Calculate new values, call update function
+   */
+		function updateAndRender() {
+			var pointerChangeX = pointerCurrentX - pointerLastX;
+			var pointerChangeY = pointerCurrentY - pointerLastY;
+
+			targetX += pointerChangeX * multiplier;
+			targetY += pointerChangeY * multiplier;
+
+			if (bounce) {
+				var diff = checkBounds();
+				if (diff.x !== 0) {
+					targetX -= pointerChangeX * dragOutOfBoundsMultiplier(diff.x) * multiplier;
+				}
+				if (diff.y !== 0) {
+					targetY -= pointerChangeY * dragOutOfBoundsMultiplier(diff.y) * multiplier;
+				}
+			} else {
+				checkBounds(true);
+			}
+
+			callUpdateCallback();
+
+			pointerLastX = pointerCurrentX;
+			pointerLastY = pointerCurrentY;
+			ticking = false;
+		}
+
+		/**
+   * Returns a value from around 0.5 to 1, based on distance
+   * @param {Number} val
+   */
+		function dragOutOfBoundsMultiplier(val) {
+			return 0.000005 * Math.pow(val, 2) + 0.0001 * val + 0.55;
+		}
+
+		/**
+   * prevents animating faster than current framerate
+   */
+		function requestTick() {
+			if (!ticking) {
+				requestAnimFrame(updateAndRender);
+			}
+			ticking = true;
+		}
+
+		/**
+   * Determine position relative to bounds
+   * @param {Boolean} restrict Whether to restrict target to bounds
+   */
+		function checkBounds(restrict) {
+			var xDiff = 0;
+			var yDiff = 0;
+
+			if (boundXmin !== undefined && targetX < boundXmin) {
+				xDiff = boundXmin - targetX;
+			} else if (boundXmax !== undefined && targetX > boundXmax) {
+				xDiff = boundXmax - targetX;
+			}
+
+			if (boundYmin !== undefined && targetY < boundYmin) {
+				yDiff = boundYmin - targetY;
+			} else if (boundYmax !== undefined && targetY > boundYmax) {
+				yDiff = boundYmax - targetY;
+			}
+
+			if (restrict) {
+				if (xDiff !== 0) {
+					targetX = xDiff > 0 ? boundXmin : boundXmax;
+				}
+				if (yDiff !== 0) {
+					targetY = yDiff > 0 ? boundYmin : boundYmax;
+				}
+			}
+
+			return {
+				x: xDiff,
+				y: yDiff,
+				inBounds: xDiff === 0 && yDiff === 0
+			};
+		}
+
+		/**
+   * Initialize animation of values coming to a stop
+   */
+		function startDecelAnim() {
+			var firstPoint = trackingPoints[0];
+			var lastPoint = trackingPoints[trackingPoints.length - 1];
+
+			var xOffset = lastPoint.x - firstPoint.x;
+			var yOffset = lastPoint.y - firstPoint.y;
+			var timeOffset = lastPoint.time - firstPoint.time;
+
+			var D = timeOffset / 15 / multiplier;
+
+			decVelX = xOffset / D || 0; // prevent NaN
+			decVelY = yOffset / D || 0;
+
+			var diff = checkBounds();
+
+			if (Math.abs(decVelX) > 1 || Math.abs(decVelY) > 1 || !diff.inBounds) {
+				decelerating = true;
+				requestAnimFrame(stepDecelAnim);
+			}
+		}
+
+		/**
+   * Animates values slowing down
+   */
+		function stepDecelAnim() {
+			if (!decelerating) {
+				return;
+			}
+
+			decVelX *= friction;
+			decVelY *= friction;
+
+			targetX += decVelX;
+			targetY += decVelY;
+
+			var diff = checkBounds();
+
+			if (Math.abs(decVelX) > stopThreshold || Math.abs(decVelY) > stopThreshold || !diff.inBounds) {
+
+				if (bounce) {
+					var reboundAdjust = 2.5;
+
+					if (diff.x !== 0) {
+						if (diff.x * decVelX <= 0) {
+							decVelX += diff.x * bounceDeceleration;
+						} else {
+							var adjust = diff.x > 0 ? reboundAdjust : -reboundAdjust;
+							decVelX = (diff.x + adjust) * bounceAcceleration;
+						}
+					}
+					if (diff.y !== 0) {
+						if (diff.y * decVelY <= 0) {
+							decVelY += diff.y * bounceDeceleration;
+						} else {
+							var adjust = diff.y > 0 ? reboundAdjust : -reboundAdjust;
+							decVelY = (diff.y + adjust) * bounceAcceleration;
+						}
+					}
+				} else {
+					if (diff.x !== 0) {
+						if (diff.x > 0) {
+							targetX = boundXmin;
+						} else {
+							targetX = boundXmax;
+						}
+						decVelX = 0;
+					}
+					if (diff.y !== 0) {
+						if (diff.y > 0) {
+							targetY = boundYmin;
+						} else {
+							targetY = boundYmax;
+						}
+						decVelY = 0;
+					}
+				}
+
+				callUpdateCallback();
+
+				requestAnimFrame(stepDecelAnim);
+			} else {
+				decelerating = false;
+			}
+		}
+	}
+
+	/**
+  * @see http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+  */
+	;
+
+	module.exports = Impetus;
+	var requestAnimFrame = (function () {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();
+});
+
+(function() {
+
+  // constructor
+  this.ScrollPanes = function(elm, options){
+    this.panes = document.querySelectorAll(elm);
+    this.scrollPoints = [];
+    this.scroller;
+    this.index = 0;
+    this.lastScrollTop = 0;
+
+    // default options
+    var defaults = {
+      'minWidth': 1023,
+      'touch': true
+    }
+
+    // Create options by extending defaults with the passed in arugments
+    if (arguments[1] && typeof arguments[1] === 'object') {
+      this.options = extendDefaults(defaults, arguments[1]);
+    } else {
+      this.options = defaults;
+    }
+
+    // init the scroller
+    if (window.innerWidth > this.options.minWidth) {
+      this.init();
+    }
+
+  }
+
+  ScrollPanes.prototype.init = function() {
+    window.onload = function(){
+      createScroller.call(this);
+      reCalcScrollPoints.call(this);
+      bindEvents.call(this);
+    }.bind(this);
+  }
+
+  ScrollPanes.prototype.is_touch_device = function() {
+    return (('ontouchstart' in window)
+         || (navigator.MaxTouchPoints > 0)
+         || (navigator.msMaxTouchPoints > 0));
+  }
+
+  var reCalcScrollPoints = function() {
+    // empty out the array
+    this.scrollPoints = [];
+
+    // calc height of panes
+    for (var i = 0, len = this.panes.length; i < len; i++) {
+      var oHeight = this.panes[i].offsetHeight;
+      var nHeight = (i > 0) ? (oHeight + this.scrollPoints[i-1]) : oHeight;
+      this.scrollPoints.push(nHeight);
+    }
+
+    // prepend 0 to the array
+    this.scrollPoints.unshift(0);
+
+    // set the scrolling height
+    this.scroller.style.height = this.scrollPoints[this.scrollPoints.length - 1] + 'px';
+  }
+
+  var createScroller = function() {
+    // create the scroller element to enable scrolling
+    this.scroller = document.createElement('div');
+    this.scroller.style.position = 'absolute';
+    this.scroller.style.width = '1px';
+    document.body.appendChild(this.scroller);
+  }
+
+  var bindEvents = function() {
+    window.addEventListener('resize', handleScreenChange.bind(this), false);
+    window.addEventListener('orientationchange', handleScreenChange.bind(this), false);
+
+    if(!this.is_touch_device()) {
+      window.addEventListener('scroll', handleScroll.bind(this), false);
+    } else {
+      if( this.options.touch === true ) {
+        if (typeof Impetus != 'undefined') {
+          // calculate outer bounds
+          var h = (parseInt(this.scroller.style.height) - window.innerHeight) * -1;
+          new Impetus({
+            source: document.querySelector('body'),
+            multiplier: 1.3,
+            boundY: [h, 0],
+            update: function(x, y) {
+              handleScroll.call(this, 'touch', y)
+            }.bind(this)
+          });
+        } else {
+          alert('Include ImpetusJS to support touch devices');
+        }
+      }
+    }
+  }
+
+  var handleScreenChange = function() {
+    if(window.innerWidth > this.options.minWidth) {
+      reCalcScrollPoints.bind(this);
+    } else {
+      console.log('removing handlers')
+      window.removeEventListener('scroll', handleScroll.bind(this), false);
+    }
+
+  }
+
+  var handleScroll = function(event, offset) {
+    var offset = offset || window.pageYOffset*-1;
+    var pane = this.panes[this.index];
+    var scrollOffset = (offset + this.scrollPoints[this.index]);
+    pane.style['transform'] = 'translate3d(0px,' + scrollOffset + 'px, 0px)';
+    pane.style['-mstransform'] = 'translate3d(0px,' + scrollOffset + 'px, 0px)';
+    pane.style['-webkit-transform'] = 'translate3d(0px,' + scrollOffset + 'px, 0px)';
+
+    // force element repaint on touch devices
+    if(this.is_touch_device() && !pane.dataset.haspaint) {
+      pane.style.display='none';
+      pane.offsetHeight; // no need to store this anywhere, the reference is enough
+      pane.style.display='';
+      pane.dataset.haspaint = 'yes';
+    }
+
+    if((offset*-1) > this.scrollPoints[this.index + 1]) {
+      this.index++;
+      this.index = Math.min(this.index, this.panes.length - 2);
+    }
+
+    if((offset*-1) < this.scrollPoints[this.index]) {
+      // make all the panels hard snap to the top, except the first one, which may bounce
+      if( this.index > 0 ) {
+        pane.style['transform'] = 'translate3d(0px,0px,0px)';
+        pane.style['-mstransform'] = 'translate3d(0px,0px,0px)';
+        pane.style['-webkit-transform'] = 'translate3d(0px,0px,0px)';
+      }
+
+      this.index--;
+      this.index = Math.max(0, this.index);
+    }
+  }
+
+  var is_touch_device = function() {
+   return (('ontouchstart' in window)
+        || (navigator.MaxTouchPoints > 0)
+        || (navigator.msMaxTouchPoints > 0));
+  }
+
+  // Utility method to extend defaults with user options
+  var extendDefaults = function(source, properties) {
+    var property;
+    for (property in properties) {
+      if (properties.hasOwnProperty(property)) {
+        source[property] = properties[property];
+      }
+    }
+    return source;
+  }
+
+}());
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+
+  var panes = new ScrollPanes('.panel');
+
+
+  $('html').addClass( panes.is_touch_device() ? 'touch' : 'no-touch');
+
+  // if(!is_touch_device()) {
+  //   reCalculatePanels();
+  //
+  //   $(window).on('scroll', function(e) {
+  //     var $win = $(this);
+  //     var scrollOffset = ($win.scrollTop() - scrollPoints[index]) * -1;
+  //     scrollOffset = scrollOffset < 0 ? scrollOffset : 0; // scrollOffset can never be smaller than 0!
+  //     $($panels[index]).css('transform', 'translateY(' + scrollOffset  + 'px)');
+  //
+  //     if ($win.scrollTop() > lastScrollTop){
+  //       if( $win.scrollTop() > scrollPoints[index+1]) {
+  //         index++;
+  //
+  //       }
+  //     } else {
+  //       if( $win.scrollTop() < scrollPoints[index]) {
+  //         index--;
+  //       }
+  //     }
+  //     lastScrollTop = $win.scrollTop();
+  //
+  //   }).trigger('scroll');
+  //
+  //   $(window).on('resize orientationchange', function(e){
+  //     reCalculatePanels();
+  //     $(this).trigger('scroll');
+  //   });
+  // }
+  //
+  //
+  // // flashing bg on bumper panel
+  // if(!is_touch_device()) {
+  //   setInterval(function() {
+  //     $('.panel-bumper').toggleClass('is-inverse');
+  //   }, 50);
+  // }
+
+
+  // load the aftermovie in a fancybox
+  $('.aftermovie').fancybox({
     openEffect  : 'none',
 		closeEffect : 'none',
     margin: 40,

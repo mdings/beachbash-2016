@@ -4,58 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>the winner takes it all</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <script>
-      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-      document,'script','//connect.facebook.net/en_US/fbevents.js');
-      
-      fbq('init', '612823758816037');
-      fbq('track', "PageView");
-      
-    </script>
   </head>
   <body>
-    <main>
+    <nav class="nav-mobile"><span></span></nav>
+    <nav class="nav-desktop">
+      <ul>
+        <li><a href="#" class="active">Home</a><a href="#">Introduction</a><a href="#">Q&A</a><a href="#">Contact</a><a href="#">Tickets</a></li>
+      </ul>
+    </nav>
+    <div class="wrapper">
       <div class="panel panel-tout">
-        <div class="wrap"><span class="date">Zaterdag 16 juli</span><span class="location">Thorn, Maasplassen</span><img src="img/logo-bb.svg"><a href="https://www.tixxx.nl/nl/ticketshop/tickets/132" title="Koop tickets" class="button button__primary">Koop tickets</a></div>
+        <div>
+          <div class="date">Zaterdag 16 juli</div>
+          <div class="location">Maasplassen Thorn</div>
+          <div><img src="/img/logo-bb.svg" class="logo"></div><a href="#linktotickes" class="button button--primary">Koop tickets</a>
+        </div>
       </div>
-      <div class="panel panel-intro"><a href="https://www.youtube.com/watch?v=hsKgcl7jiHE" class="panel__video"></a>
-        <div class="indent">
-          <div class="panel__content">
-            <section class="about">
-              <h1>Once Upon a Beach</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                
-                
-                
-              </p>
-            </section>
+      <div class="panel panel-bumper">
+        <div class="panel__bg"></div>
+        <div class="panel__overlay"></div>
+      </div>
+      <div class="panel panel-intro">
+        <div class="row">
+          <div class="columns">
+            <h1>Introduction</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              
+            </p><a href="https://www.youtube.com/watch?v=hsKgcl7jiHE" class="aftermovie"><span class="aftermovie__bg"></span><span class="aftermovie__button aftermovie__button--play"></span></a>
           </div>
         </div>
       </div>
-      <div class="panel panel-movie">
-        <div class="bg"></div>
-        <div class="overlay"><span class="payoff"><span class="payoff__line">Your life is your story.</span><span class="payoff__line">Write well. Edit often.</span></span></div>
-      </div>
-      <div class="panel panel-info">
-        <div class="panel__content">
-          <section class="more-info">
-            <div class="row">
-              <div class="small-12 columns">
-                <Lorem>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Lorem>
-              </div>
-            </div>
-          </section>
+      <div class="panel panel-qa">
+        <div class="row">
+          <div class="columns">
+            <h2>Q&A</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 medium-6 columns">
+            <h3>Algemene info</h3>
+            <h4>Waar vindt OUAB plaats?</h4>
+            <p>Maasplassen in Thorn. Hier op Google Maps. Adres voor navigatie is waterstraat 12, Thorn</p>
+            <h3>Bereikbaarheid</h3>
+            <h4>Auto vanuit het noorden</h4>
+            <p>Even een korte routebeschrijving maken</p>
+            <h4>Auto vanuit het zuiden</h4>
+            <p>Even een korte routebeschrijving maken</p>
+            <h4>Openbaar vervoer</h4>
+            <p>Routeplanner invoegen</p>
+          </div>
+          <div class="small-12 medium-6 columns">
+            <h3>Tickets</h3>
+            <h4>Wat kost een ticket?</h4>
+            <p>Tickets in de voorverkoop kosten zoveel en dan later zoveel</p>
+            <h3>Faciliteiten</h3>
+            <h4>Lockers</h4>
+            <p>Er zijn standaard lockers op het terrein aanwezig</p>
+            <h4>Fouilleren en zero-tolerance</h4>
+            <P>Fouilleren en anders niet binnen hoor</P>
+            <h4>Eten en drinken</h4>
+            <p>Foodtrucks, diverse dranken etc.</p>
+          </div>
         </div>
       </div>
-    </main>
+      <div class="panel panel-outro">
+        <div class="panel__tags"><span>Your Life Is Your Story.</span><span>Write Well, Edit Often.</span></div>
+      </div>
+      <div class="panel panel-contact">
+        <div class="row">
+          <div class="columns">
+            <h2>Contact</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="credentials">
+      <a href="https://github.com/mdings/beachbash-2016">Source on Github</a>
+      
+    </div>
   </body>
   <script src="http://code.jquery.com/jquery-latest.js">       </script>
   <script src="js/main.js"></script>
