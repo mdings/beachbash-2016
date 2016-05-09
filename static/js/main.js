@@ -15,7 +15,7 @@ $(document).ready(function() {
         $('.nav-desktop')
           .find('a').removeClass('active')
           .parent()
-          .find('a[href=#'+href+']')
+          .find('a[href="#'+href+'"]')
           .addClass('active');
       }
     }
