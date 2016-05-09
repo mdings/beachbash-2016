@@ -20,5 +20,8 @@
     "fancybox": "^2.1.5",
     "foundation-sites": "^6.2.0",
     "normalize-css": "^4.0.0"
+  },
+  "devDependencies": {
+    "fastclick": "^1.0.6"
   }
 }

@@ -20,6 +20,7 @@ gulp.task('serve', function() {
   gulp.watch('static/**/*.js', ['scripts']);
   gulp.watch('static/img/**/*.{gif, jpg, jpeg, .png}', ['build']);
   gulp.watch('documents/**/*.md', ['build']);
+  gulp.watch('layouts/**/*.pug', ['build']);
   gulp.watch('layouts/**/*.jade', ['build']);
 });
 
@@ -27,7 +28,8 @@ gulp.task('scripts', function() {
   return gulp.src([
     'bower_components/fancybox/source/jquery.fancybox.js',
     'bower_components/fancybox/source/helpers/jquery.fancybox-media.js',
-    'static/js/vendor/impetus.js',
+    'bower_components/fastclick/lib/fastclick.js',
+    'static/js/vendor/wicket.js',
     'static/js/main.js'
   ])
   .pipe(concat('main.js'))
@@ -42,7 +44,10 @@ gulp.task('sass', function() {
     fontMagician({hosted: './static/fonts/'}),
     pxtorem({propWhiteList: []}),
     postcssSVG({
-      paths: ['./build/img/play.svg', './build/img/home.svg'],
+      paths: [
+        './build/img/play.svg',
+        './build/img/home.svg',
+        './build/img/chevron-right.svg'],
       defaults: "[fill]: none",
     }),
   ];
@@ -70,4 +75,4 @@ gulp.task('deploy', function() {
     .pipe(ghPages());
 });
 
-gulp.task('default', ['serve']);
+gulp.task('default', ['sass', 'scripts', 'serve']);

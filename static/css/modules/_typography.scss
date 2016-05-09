@@ -1,25 +1,35 @@
 h1 {
-  font-family: Lato;
+  font-family: Vollkorn;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
   margin: 0 0 0;
   padding: 0;
-  text-transform: uppercase;
-  font-size: 60px;
-  word-break: break-all;
+  // text-transform: uppercase;
+  font-size: 65px;
+  text-decoration: underline;
 }
 
 h2 {
-  font-family: Lato;
+  font-family: Vollkorn;
+  text-decoration: underline;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
   margin: 0 0 0;
   padding: 0;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   font-size: 60px;
+  text-align: center;
 }
 
+
 h3 {
-  font-family: Lato;
+  font-family: 'Roboto Slab';
+  font-weight: 400;
   margin: 25px 0 0;
   padding: 0;
-  font-size: 30px;
+  font-size: 22px;
 }
 
 h4 {
@@ -34,9 +44,27 @@ h4 {
 }
 
 p {
-  font-family: Arimo;
-  font-weight: 400;
+  font-family: 'Roboto Slab';
+  font-weight: 300;
   font-size: 18px;
   margin: 20px 0 0;
   padding: 0;
+
+  a {
+    color: inherit;
+    font-weight: 400;
+    border-bottom: 2px dotted currentColor;
+    text-decoration: none;
+
+    &:hover {
+      border-bottom-style: solid;
+    }
+  }
+}
+
+ul,
+li {
+  font-family: 'Roboto Slab';
+  font-weight: 300;
+  font-size: 18px;
 }

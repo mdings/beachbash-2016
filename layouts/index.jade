@@ -3,22 +3,21 @@ html
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width,initial-scale=1")
-    
+
     title= title
     link(rel="stylesheet" href="css/main.css")
-    
-    
+
   body
-    include partials/nav.jade
+    include partials/nav.pug
     .wrapper
-      include partials/tout.jade
-      include partials/bumper.jade
-      include partials/intro.jade
-      include partials/qa.jade
-      include partials/outro.jade
-      include partials/contact.jade
-      .credentials. 
+      include partials/tout.pug
+      include partials/bumper.pug
+      include partials/intro.pug
+      include partials/qa.pug
+      include partials/outro.pug
+      include partials/contact.pug
+      .credentials.
         <a href="https://github.com/mdings/beachbash-2016">Source on Github</a>
-      
-  script(src="http://code.jquery.com/jquery-latest.js")        
+
+  script(src="http://code.jquery.com/jquery-latest.js")
   script(src="js/main.js")

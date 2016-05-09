@@ -16,7 +16,7 @@
 
   @include breakpoint(large up) {
     border-width: map-get($borderWidth, large);
-    padding: 60px 140px 70px;
+    padding: 60px 30px 70px;
     position: fixed;
     top: 0;
     right: 0;
@@ -89,6 +89,7 @@
   color: #fff;
   border-color: #d54f9d;
   border-image: url(../img/matrix.jpg);
+
   @include breakpoint(small) {
     border-image-slice: strip-unit(map-get($borderWidth, small));
   }
@@ -99,14 +100,21 @@
 
   @include breakpoint(large up) {
     border-image-slice: strip-unit(map-get($borderWidth, large));
+    padding-left: 60px;
+    padding-right: 60px;
   }
 }
 
 .panel-bumper {
+  display: none;
   border-color: #9f2de1;
   background: linear-gradient(to left, #7474BF , #348AC7);
   background-position: center center;
   min-height: calc(100vh);
+
+  @include breakpoint(large up) {
+    display: block;
+  }
 
   &.is-inverse {
     .panel__bg {
@@ -120,6 +128,7 @@
 }
 
 .panel-qa {
+  text-align: left;
   z-index: 7;
   background: $color2;
   border-color: mix(#000, $color2, 40%);
@@ -127,6 +136,28 @@
   background-position: center center;
   background-repeat: repeat-x;
   background-size: 600px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    white-space: pre-line;
+    text-align: left;
+
+  }
+
+  li {
+    margin: 0;
+    padding: 0 0 0 35px;
+    list-style: none;
+    display: inline-block;
+
+    @include pseudo-element {
+      background-size: 30px;
+      background-position: 0px -1px;
+      background-repeat: no-repeat;
+      background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI1MTIiIGlkPSJzdmcyIiB2ZXJzaW9uPSIxLjEiIHdpZHRoPSI1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6Y2M9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL25zIyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIiB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzIGlkPSJkZWZzNCIvPjxnIGlkPSJsYXllcjEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsLTU0MC4zNjIxOCkiPjxwYXRoIGQ9Im0gMjMuNjc3OCw3ODAuNjk4NzUgYyAwLDEwLjQ0MjI5IDAsMjAuODg0NTggMCwzMS4zMjY4NyBsIDM3NC4wNjg5MSwwIDAuMDE2MiwyNC44NTcxOCA5MC41NTkyOSwtNDAuNTIwNjIgLTkwLjU1OTI5LC00MC41MjA2MiAtMC4wMTYyLDI0Ljg1NzE5IHoiIGlkPSJwYXRoMzAzNSIgc3R5bGU9ImZpbGw6IzAwMDAwMDtzdHJva2U6bm9uZSIvPjwvZz48L3N2Zz4=);
+    }
+  }
 
   @include breakpoint(large down) {
     margin-bottom: 100vh;
@@ -172,8 +203,8 @@ Elements */
   right: 0;
   bottom: 0;
   opacity: .09;
-  // background-image: url(../img/horses-friends.gif);
-  background-image: url(../img/lalabg-1.jpg);
+  background-image: url(../img/horsy-dance.gif);
+  // background-image: url(../img/lalabg-1.jpg);
   background-size: cover;
   background-position: center center;
   @include gray-filter;
@@ -181,16 +212,22 @@ Elements */
 
 .panel__tags {
   @include absolute-center;
+  max-width: 100vh;
 
   > span {
+    font-size: 40px;
+
     font-family: Vollkor;
     color: #000;
     padding: 0 20px;
     margin-bottom: 5px;
     white-space: nowrap;
-    font-size: 55px;
     display: inline-block;
     font-style: italic;
     background: #00e5be;
+
+    @include breakpoint(medium up) {
+      font-size: 55px;
+    }
   }
 }

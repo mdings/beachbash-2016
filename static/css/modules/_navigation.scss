@@ -2,7 +2,6 @@
   @include show-for(medium);
   display: none;
   position: fixed;
-  background-color: #161616;
   top: 40px;
   left: 40px;
   z-index: 99;
@@ -23,18 +22,31 @@
   }
 
   a {
-    padding: 9px 10px;
+    float: left;
+    clear: both;
+    padding: 9px 15px;
     font-size: 19px;
     text-decoration: none;
     font-family: Arimo;
     text-transform: uppercase;
     display: inline-block;
     color: #fff;
+    background-color: #161616;
+    margin-bottom: 1px;
+    transition: background 200ms;
+
+    &:hover {
+      background-color: #262626;
+    }
+
+    &#tickets {
+      background-color: $color1;
+    }
 
     &.active {
       @include pseudo-element('after') {
-        border-bottom: 3px solid #22c16d;
-        bottom: -3px;
+        border-left: 6px solid #22c16d;
+        left: -8px;
       }
 
     }

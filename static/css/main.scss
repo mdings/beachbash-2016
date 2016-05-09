@@ -60,6 +60,7 @@ body {
   background: $color5;
 
   &:before {
+    display: none;
     content: '';
     position: fixed;
     color: red;
