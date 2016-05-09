@@ -3781,6 +3781,8 @@ function is_touch_device() {
 
 $(document).ready(function() {
 
+  // init fastclick
+  FastClick.attach(document.body);
 
   var panes = new Wicket('.panel', {
     touch: true,
