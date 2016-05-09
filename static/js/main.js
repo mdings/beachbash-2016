@@ -22,7 +22,7 @@ $(document).ready(function() {
   });
 
   $(window).on('resize', function(){
-    if($(this).width() > 1023) {
+    if($(this).width() > 768) {
       panes.refresh();
     } else {
       panes.destroy();
