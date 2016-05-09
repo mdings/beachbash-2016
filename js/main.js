@@ -3785,7 +3785,7 @@ $(document).ready(function() {
   FastClick.attach(document.body);
 
   var panes = new Wicket('.panel', {
-    touch: false,
+    touch: true,
     change: function(index) {
       var href = $('.panel').eq(index).attr('id');
       if(href) {
