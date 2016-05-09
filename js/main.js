@@ -3806,7 +3806,7 @@ $(document).ready(function() {
     }
   }).trigger('resize');
 
-  $('.nav-desktop').find('a').click(function(){
+  $('.nav-desktop').find('a').on('click', function(){
     var href = $(this).attr('href');
     var offset = panes.scrollOffset(href);
     $('html, body').animate({
