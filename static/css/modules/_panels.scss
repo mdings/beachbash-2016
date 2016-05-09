@@ -65,7 +65,7 @@
 
   @include breakpoint(large up) {
     .no-touch & {
-      max-width: 40%;
+      max-width: 50%;
       margin-right: 40px;
     }
   }
@@ -204,10 +204,13 @@ Elements */
   bottom: 0;
   opacity: .09;
   background-image: url(../img/horsy-dance.gif);
-  // background-image: url(../img/lalabg-1.jpg);
   background-size: cover;
   background-position: center center;
   @include gray-filter;
+
+  .touch & {
+    background-image: url(../img/lalabg-1.jpg);
+  }
 }
 
 .panel__tags {
