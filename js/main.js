@@ -3785,7 +3785,7 @@ $(document).ready(function() {
   FastClick.attach(document.body);
 
   var panes = new Wicket('.panel', {
-    touch: true,
+    touch: false,
     change: function(index) {
       var href = $('.panel').eq(index).attr('id');
       if(href) {
@@ -3806,9 +3806,8 @@ $(document).ready(function() {
     }
   }).trigger('resize');
 
-  alert('ok');
-  
   $('.nav-desktop').find('a').on('click', function(){
+    alert('ok');
     var href = $(this).attr('href');
     var offset = panes.scrollOffset(href);
     $('html, body').animate({
