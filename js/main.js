@@ -3572,23 +3572,69 @@
       value: function bindEvents() {
         var _this = this;
 
+        var repeatOften = function repeatOften() {
+          _this.handleScroll();
+          _this.interval = requestAnimationFrame(repeatOften);
+        };
+        repeatOften();
+
         if (!is_touch_device() && !this.interval) {
-          this.interval = setInterval(function () {
-            return _this.handleScroll();
-          }, 20);
+          console.log('binding to normal');
+
+          // this.interval = setInterval(() => this.handleScroll(), 20);
         } else {
-          if (this.options.touch === true) {
-            // calculate outer bounds
-            var h = (parseInt(this.scroller.style.height) - window.innerHeight) * -1;
-            this.impetus = new Impetus({
-              source: document.querySelector('body'),
-              multiplier: 1.3,
-              boundY: [h, 0],
-              update: function update(x, y) {
-                _this.handleScroll('touch', y);
-              }
-            });
+            if (this.options.touch === true) {
+              console.log('binding to touch');
+              // calculate outer bounds
+              // this.interval = setInterval(() => this.handleScroll(), 20);
+              var h = (parseInt(this.scroller.style.height) - window.innerHeight) * -1;
+              this.impetus = new Impetus({
+                source: document.body,
+                multiplier: 1.5,
+                boundY: [h, 0],
+                update: function update(x, y) {
+                  console.log(y);
+
+                  document.body.scrollTop = y * -1;
+                  // console.log(y)
+                  // this.handleScroll('touch', y);
+                }
+              });
+            }
           }
+      }
+    }, {
+      key: 'handleScroll',
+      value: function handleScroll(event, offset) {
+        var nOffset = offset || window.scrollY * -1;
+        var hatch = this.hatches[this.index];
+        var scrollOffset = nOffset + this.scrollPoints[this.index];
+        var oIndex = this.index;
+        translateY(hatch, scrollOffset);
+
+        // force element repaint on touch devices
+        if (is_touch_device() && !hatch.dataset.haspaint) {
+          hatch.style.display = 'none';
+          hatch.offsetHeight; // no need to store this anywhere, the reference is enough
+          hatch.style.display = '';
+          hatch.dataset.haspaint = 'yes';
+        }
+
+        if (nOffset * -1 > this.scrollPoints[this.index + 1]) {
+          this.index++;
+          this.index = Math.min(this.index, this.hatches.length - 1);
+          this.callChangeCallback();
+        }
+
+        if (nOffset * -1 < this.scrollPoints[this.index]) {
+          // make all the panels hard snap to the top, except the first one, which may bounce
+          if (this.index > 0) {
+            translateY(hatch, 0);
+          }
+
+          this.index--;
+          this.index = Math.max(0, this.index);
+          this.callChangeCallback();
         }
       }
     }, {
@@ -3653,40 +3699,6 @@
         }
       }
     }, {
-      key: 'handleScroll',
-      value: function handleScroll(event, offset) {
-        var nOffset = offset || window.pageYOffset * -1;
-        var hatch = this.hatches[this.index];
-        var scrollOffset = nOffset + this.scrollPoints[this.index];
-        var oIndex = this.index;
-        translateY(hatch, scrollOffset);
-
-        // force element repaint on touch devices
-        if (is_touch_device() && !hatch.dataset.haspaint) {
-          hatch.style.display = 'none';
-          hatch.offsetHeight; // no need to store this anywhere, the reference is enough
-          hatch.style.display = '';
-          hatch.dataset.haspaint = 'yes';
-        }
-
-        if (nOffset * -1 > this.scrollPoints[this.index + 1]) {
-          this.index++;
-          this.index = Math.min(this.index, this.hatches.length - 1);
-          this.callChangeCallback();
-        }
-
-        if (nOffset * -1 < this.scrollPoints[this.index]) {
-          // make all the panels hard snap to the top, except the first one, which may bounce
-          if (this.index > 0) {
-            translateY(hatch, 0);
-          }
-
-          this.index--;
-          this.index = Math.max(0, this.index);
-          this.callChangeCallback();
-        }
-      }
-    }, {
       key: 'fixHatches',
       value: function fixHatches() {
         for (var i = 0, len = this.hatches.length; i < len; i++) {
@@ -3734,7 +3746,15 @@
         var elm = document.querySelector(id);
         var nodeList = Array.prototype.slice.call(elm.parentNode.children);
         var index = nodeList.indexOf(elm);
-        return this.scrollPoints[index];
+        window.scrollTo(0, this.scrollPoints[index]);
+        console.log(window.scrollY);
+        console.log('scroll to ' + this.scrollPoints[index]);
+        // return this.scrollPoints[index];
+      }
+    }, {
+      key: 'setValues',
+      value: function setValues(x, y) {
+        this.impetus.setValues(x, y);
       }
     }]);
 
@@ -3767,6 +3787,13 @@
     return 'ontouchstart' in window || navigator.MaxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
   };
 
+  // requestAnimationFrame for Smart Animating http://goo.gl/sx5sts
+  var requestAnimFrame = function () {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
+  }();
+
   global.Wicket = module.exports = Wicket;
 });
 
@@ -3798,6 +3825,7 @@ $(document).ready(function() {
     }
   });
 
+
   $(window).on('resize', function(){
     if($(this).width() > 768) {
       panes.refresh();
@@ -3806,13 +3834,11 @@ $(document).ready(function() {
     }
   }).trigger('resize');
 
+  // $('html, body').height(4000);
+
   $('.nav-desktop').find('a').on('click', function(){
-    alert('ok');
     var href = $(this).attr('href');
     var offset = panes.scrollOffset(href);
-    $('html, body').animate({
-      scrollTop: offset + 1
-    }, 500)
     return false;
   });
 
