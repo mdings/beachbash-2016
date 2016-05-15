@@ -3544,6 +3544,7 @@
       this.is_init = false;
       this.scroller = null;
       this.index = 0;
+      this.scrollOffset = 0;
       this.lastScrollTop = 0;
 
       // defaults
@@ -3572,45 +3573,43 @@
       value: function bindEvents() {
         var _this = this;
 
-        var repeatOften = function repeatOften() {
-          _this.handleScroll();
-          _this.interval = requestAnimationFrame(repeatOften);
-        };
-        repeatOften();
-
         if (!is_touch_device() && !this.interval) {
-          console.log('binding to normal');
-
-          // this.interval = setInterval(() => this.handleScroll(), 20);
+          (function () {
+            var repeatOften = function repeatOften() {
+              _this.handleScroll();
+              _this.interval = requestAnimationFrame(repeatOften);
+            };
+            repeatOften();
+          })();
         } else {
-            if (this.options.touch === true) {
-              console.log('binding to touch');
-              // calculate outer bounds
-              // this.interval = setInterval(() => this.handleScroll(), 20);
-              var h = (parseInt(this.scroller.style.height) - window.innerHeight) * -1;
-              this.impetus = new Impetus({
-                source: document.body,
-                multiplier: 1.5,
-                boundY: [h, 0],
-                update: function update(x, y) {
-                  console.log(y);
-
-                  document.body.scrollTop = y * -1;
-                  // console.log(y)
-                  // this.handleScroll('touch', y);
-                }
-              });
-            }
+          if (this.options.touch === true) {
+            // calculate outer bounds
+            // this.interval = setInterval(() => this.handleScroll(), 20);
+            var h = (parseInt(this.scroller.style.height) - window.innerHeight) * -1;
+            this.impetus = new Impetus({
+              source: document.body,
+              multiplier: 1.5,
+              boundY: [h, 0],
+              update: function update(x, y) {
+                _this.handleScroll('touch', y);
+              }
+            });
           }
+        }
       }
     }, {
       key: 'handleScroll',
       value: function handleScroll(event, offset) {
+        // incoming offset should be negative
+        offset = offset == 0 ? -0.001 : offset;
         var nOffset = offset || window.scrollY * -1;
         var hatch = this.hatches[this.index];
         var scrollOffset = nOffset + this.scrollPoints[this.index];
         var oIndex = this.index;
         translateY(hatch, scrollOffset);
+
+        // keep track of the current scrollOffset
+        this.scrollOffset = nOffset;
 
         // force element repaint on touch devices
         if (is_touch_device() && !hatch.dataset.haspaint) {
@@ -3741,15 +3740,42 @@
         document.body.removeChild(this.scroller);
       }
     }, {
-      key: 'scrollOffset',
-      value: function scrollOffset(id) {
+      key: 'scrollTo',
+      value: function scrollTo(id) {
+        var _this3 = this;
+
+        // clear the interval when there is one set
+        if (interval) clearInterval(interval);
         var elm = document.querySelector(id);
         var nodeList = Array.prototype.slice.call(elm.parentNode.children);
         var index = nodeList.indexOf(elm);
-        window.scrollTo(0, this.scrollPoints[index]);
-        console.log(window.scrollY);
-        console.log('scroll to ' + this.scrollPoints[index]);
-        // return this.scrollPoints[index];
+
+        // update index value
+        this.index = index;
+
+        var start = this.scrollOffset;
+        var end = this.scrollPoints[index] * -1;
+        var delta = start;
+        var scrollSpeed = 55;
+
+        var interval = setInterval(function () {
+
+          if (start < end) {
+            if (delta >= end) clearInterval(interval);
+            delta = parseFloat(Math.min(delta += scrollSpeed, end)) + 0.001;
+          } else {
+            if (delta <= end) clearInterval(interval);
+            delta = parseFloat(Math.max(delta -= scrollSpeed, end)) - 0.001;
+          }
+
+          // scroll to panel
+          _this3.handleScroll('touch', delta);
+
+          // update impetus values
+          if (_this3.impetus) {
+            _this3.impetus.setValues(0, end);
+          }
+        }, 10);
       }
     }, {
       key: 'setValues',
@@ -3788,11 +3814,11 @@
   };
 
   // requestAnimationFrame for Smart Animating http://goo.gl/sx5sts
-  var requestAnimFrame = function () {
+  var requestAnimFrame = function requestAnimFrame() {
     return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
       window.setTimeout(callback, 1000 / 60);
     };
-  }();
+  };
 
   global.Wicket = module.exports = Wicket;
 });
@@ -3811,43 +3837,40 @@ $(document).ready(function() {
   // init fastclick
   FastClick.attach(document.body);
 
-  var panes = new Wicket('.panel', {
-    touch: true,
-    change: function(index) {
-      var href = $('.panel').eq(index).attr('id');
-      if(href) {
-        $('.nav-desktop')
-          .find('a').removeClass('active')
-          .parent()
-          .find('a[href="#'+href+'"]')
-          .addClass('active');
+  // wait for images to load as well
+  $(window).load(function(){
+    var panes = new Wicket('.panel', {
+      touch: true,
+      change: function(index) {
+        var href = $('.panel').eq(index).attr('id');
+        if(href) {
+          $('.nav-desktop')
+            .find('a').removeClass('active')
+            .parent()
+            .find('a[href="#'+href+'"]')
+            .addClass('active');
+        }
       }
-    }
-  });
+    });
 
+    $(this).on('resize', function(){
+      if($(this).width() > 768) {
+        panes.refresh();
+      } else {
+        panes.destroy();
+      }
+    }).trigger('resize');
 
-  $(window).on('resize', function(){
-    if($(this).width() > 768) {
-      panes.refresh();
-    } else {
-      panes.destroy();
-    }
-  }).trigger('resize');
+    $('.nav-desktop').find('a').on('click', function(){
+      var href = $(this).attr('href');
+      var offset = panes.scrollTo(href);
+      return false;
+    });
+  })
 
-  // $('html, body').height(4000);
-
-  $('.nav-desktop').find('a').on('click', function(){
-    var href = $(this).attr('href');
-    var offset = panes.scrollOffset(href);
-    return false;
-  });
 
   $('html').addClass( is_touch_device() ? 'touch' : 'no-touch');
 
-
-  // setInterval(function(){
-  //   $('.panel-bumper').toggleClass('is-inverse');
-  // }, 50);
 
   // load the aftermovie in a fancybox
   $('.aftermovie').fancybox({
