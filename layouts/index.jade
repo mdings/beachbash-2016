@@ -2,13 +2,14 @@ doctype html
 html
   head
     meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width,initial-scale=1")
+    meta(name="viewport", content="width=device-width,initial-scale=1,user-scalable=yes")
 
     title= title
     link(rel="stylesheet" href="css/main.css")
 
   body
     include partials/nav.pug
+    a.button.button--mobile.button--primary(href="https://www.tixxx.nl/nl/ticketshop/tickets/132/website") Koop tickets: &euro;17,50
     .wrapper
       include partials/tout.pug
       include partials/bumper.pug
@@ -16,8 +17,6 @@ html
       include partials/qa.pug
       include partials/outro.pug
       include partials/contact.pug
-      .credentials.
-        <a href="https://github.com/mdings/beachbash-2016">Source on Github</a>
 
   script(src="//code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous")
   script(src="js/main.js")

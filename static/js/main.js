@@ -6,44 +6,43 @@ function is_touch_device() {
 
 $(document).ready(function() {
 
+  // init fastclick
+  FastClick.attach(document.body);
 
-  var panes = new Wicket('.panel', {
-    touch: true,
-    change: function(index) {
-      var href = $('.panel').eq(index).attr('id');
-      if(href) {
-        $('.nav-desktop')
-          .find('a').removeClass('active')
-          .parent()
-          .find('a[href="#'+href+'"]')
-          .addClass('active');
+  // wait for images to load as well
+  $(window).load(function(){
+    var panes = new Wicket('.panel', {
+      touch: true,
+      change: function(index) {
+        var href = $('.panel').eq(index).attr('id');
+        if(href) {
+          $('.nav-desktop')
+            .find('a').removeClass('active')
+            .parent()
+            .find('a[href="#'+href+'"]')
+            .addClass('active');
+        }
       }
-    }
-  });
+    });
 
-  $(window).on('resize', function(){
-    if($(this).width() > 768) {
-      panes.refresh();
-    } else {
-      panes.destroy();
-    }
-  }).trigger('resize');
+    $(this).on('resize', function(){
+      if($(this).width() > 768) {
+        panes.refresh();
+      } else {
+        panes.destroy();
+      }
+    }).trigger('resize');
 
-  $('.nav-desktop').find('a').click(function(){
-    var href = $(this).attr('href');
-    var offset = panes.scrollOffset(href);
-    $('html, body').animate({
-      scrollTop: offset + 1
-    }, 500)
-    return false;
-  });
+    $('.nav-desktop').find('a').on('click', function(){
+      var href = $(this).attr('href');
+      var offset = panes.scrollTo(href);
+      return false;
+    });
+  })
+
 
   $('html').addClass( is_touch_device() ? 'touch' : 'no-touch');
 
-
-  // setInterval(function(){
-  //   $('.panel-bumper').toggleClass('is-inverse');
-  // }, 50);
 
   // load the aftermovie in a fancybox
   $('.aftermovie').fancybox({

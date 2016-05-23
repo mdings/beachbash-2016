@@ -1,14 +1,13 @@
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
-var sass = require('gulp-sass');
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var fontMagician = require('postcss-font-magician');
-var pxtorem = require('postcss-pxtorem');
-var postcssSVG = require('postcss-svg');
-var concat = require('gulp-concat');
-var ghPages = require('gulp-gh-pages');
-var sourcemaps = require('gulp-sourcemaps');
+var gulp = require('gulp'),
+  browserSync = require('browser-sync').create(),
+  sass = require('gulp-sass'),
+  postcss = require('gulp-postcss'),
+  autoprefixer = require('autoprefixer'),
+  fontMagician = require('postcss-font-magician'),
+  pxtorem = require('postcss-pxtorem'),
+  concat = require('gulp-concat'),
+  ghPages = require('gulp-gh-pages'),
+  sourcemaps = require('gulp-sourcemaps');
 
 // Static Server + watching scss/html files
 gulp.task('serve', function() {
@@ -42,19 +41,15 @@ gulp.task('sass', function() {
   var processors = [
     autoprefixer({browsers: ['last 2 version']}),
     fontMagician({hosted: './static/fonts/'}),
-    pxtorem({propWhiteList: []}),
-    postcssSVG({
-      paths: [
-        './build/img/play.svg',
-        './build/img/home.svg',
-        './build/img/chevron-right.svg'],
-      defaults: "[fill]: none",
-    }),
+    pxtorem({propWhiteList: []})
   ];
   return gulp.src('static/css/*.scss')
   .pipe(sourcemaps.init())
   .pipe(sass({
-    includePaths: ['./bower_components/foundation-sites/scss/', './bower_components/']
+    includePaths: [
+      './bower_components/foundation-sites/scss/',
+      './bower_components/'
+    ]
   }))
   .on('error', sass.logError)
   .pipe(postcss(processors))

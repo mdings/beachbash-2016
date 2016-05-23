@@ -3,9 +3,9 @@
   text-align: center;
   border-style: solid;
   box-shadow: -3px 3px 10px 1px rgba(0,0,0,.2);
-  padding: 20px 10px 30px;
 
   @include breakpoint(small) {
+    padding: 70px 10px 70px;
     border-width: map-get($borderWidth, small);
   }
 
@@ -29,22 +29,6 @@
         width: calc(50% + (#{$panelSpacing} * #{$i}));
       }
     }
-
-
-    // .no-touch & {
-    //   position: fixed;
-    //   top: 0;
-    //   right: 0;
-    //
-    //   /*
-    //   Set the z-index of the panels */
-    //   @for $i from 1 through 6 {
-    //     &:nth-child(#{$i}) {
-    //       z-index: 20 - $i;
-    //       width: calc(50% + (#{$panelSpacing} * #{$i}));
-    //     }
-    //   }
-    // }
   }
 
 }
@@ -62,6 +46,7 @@
   background-size: 50%;
   font-size: 40px;
   line-height: 1;
+  min-height: 80vh;
 
   @include breakpoint(large up) {
     .no-touch & {
@@ -122,8 +107,8 @@
     }
   }
 
-  .no-touch & {
-
+  .touch & {
+    display: none; // don' show this panel on touch devices
   }
 }
 
@@ -185,12 +170,6 @@
   bottom: 0;
   width: 100vw!important;
   box-shadow: none;
-
-  // .no-touch & {
-  //   bottom: 0;
-  //   top: initial;
-  //   width: 100vw!important;
-  // }
 }
 
 
@@ -207,10 +186,6 @@ Elements */
   background-size: cover;
   background-position: center center;
   @include gray-filter;
-
-  .touch & {
-    background-image: url(../img/lalabg-1.jpg);
-  }
 }
 
 .panel__tags {

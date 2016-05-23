@@ -34,12 +34,19 @@
 }
 
 .aftermovie__button--play {
-  background-size: 40px;
-  background-position: calc(50% + 4px) center;
-  background-image: svg('play', '[fill]:#{$color4}');
-  background-repeat: no-repeat;
+  background-color: #fff;
+  display: block;
+  position: absolute!important;
 
   &:hover {
-    background-image: svg('play', '[fill]:#{$color3}');
+    background-color: $color1;
+  }
+  
+  @include pseudo-element {
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image:
+      url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEzOSAxMzkiIGhlaWdodD0iMTM5cHgiIGlkPSJQbGF5IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMzkgMTM5IiB3aWR0aD0iMTM5cHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik0xMTcuMDM3LDYxLjQ0MUwzNi4zMzMsMTQuODQ2Yy0yLjQ2Ny0xLjQyNC01LjUwMi0xLjQyNC03Ljk3MiwwYy0yLjQ2MywxLjQyMy0zLjk4Miw0LjA1Ni0zLjk4Miw2LjkwM3Y5My4xODggIGMwLDIuODQ4LDEuNTIyLDUuNDc5LDMuOTgyLDYuOWMxLjIzNiwwLjcxMywyLjYxLDEuMDY3LDMuOTg2LDEuMDY3YzEuMzc0LDAsMi43NTEtMC4zNTQsMy45ODMtMS4wNjdsODAuNzA0LTQ2LjU5NCAgYzIuNDY2LTEuNDIyLDMuOTg0LTQuMDU0LDMuOTg0LTYuOUMxMjEuMDIzLDY1LjQ5NywxMTkuNTAyLDYyLjg2NiwxMTcuMDM3LDYxLjQ0MXoiLz48L3N2Zz4=)
   }
 }

@@ -20,7 +20,8 @@ $panelSpacing: 100px;
 Foundation */
 @import
 "settings",
-"foundation";
+"foundation",
+"states";
 
 @include foundation-global-styles;
 @include foundation-grid;
@@ -44,7 +45,7 @@ Custom */
 
 html {
   font-size: 12px;
-  overflow: visible;
+  touch-action: manipulation;
 
   @include breakpoint(medium up) {
     font-size: 16px;
@@ -56,8 +57,12 @@ html {
 }
 
 body {
-  overflow: visible;
+  overflow: scroll;
   background: $color5;
+
+  .wrapper {
+      margin-top: 100px;
+  }
 
   &:before {
     display: none;
@@ -84,25 +89,3 @@ body {
   }
 
 }
-
-
-.credentials {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  z-index: 999;
-  color: #fff;
-  font-size: 15px;
-
-  a {
-    color: #fff;
-  }
-}
-
-/*
-Calculates the total scrolling distance */
-// .scroller {
-//   position: absolute;
-//   left: 1px;
-//   width: 1px;
-// }

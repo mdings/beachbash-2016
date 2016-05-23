@@ -26,3 +26,16 @@ button,
     background: mix(#000, $color0, 70%);
   }
 }
+
+.button--mobile {
+  position: fixed;
+  top: 30px;
+  left: 50px;
+  right: 50px;
+  z-index: 99;
+  text-align: center;
+
+  @include breakpoint(large up) {
+    display: none;
+  }
+}

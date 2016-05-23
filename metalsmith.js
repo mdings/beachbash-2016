@@ -1,9 +1,9 @@
-var Metalsmith = require('metalsmith');
-var markdown = require('metalsmith-markdownit');
-var assets = require('metalsmith-assets');
-var layouts = require('metalsmith-layouts');
-var collections = require('metalsmith-collections');
-var debug = require('metalsmith-debug');
+var Metalsmith = require('metalsmith'),
+  markdown = require('metalsmith-markdownit'),
+  assets = require('metalsmith-assets'),
+  layouts = require('metalsmith-layouts'),
+  collections = require('metalsmith-collections'),
+  debug = require('metalsmith-debug');
 
 var metalsmith = function(dest) {
   return Metalsmith(__dirname)
